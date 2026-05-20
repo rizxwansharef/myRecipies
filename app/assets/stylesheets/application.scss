@@ -1,0 +1,7 @@
+/*
+ * Bootstrap CSS is loaded from CDN in the layout.
+ * This avoids Sprockets/Sass engine compatibility issues.
+ */
+@use 'custom';
+
+/* Add custom application styles below. */

@@ -1,0 +1,36 @@
+<footer class="bg-dark text-light mt-5 py-4">
+  <div class="container">
+    <div class="row">
+
+      <div class="col-md-6">
+        <h5>My Recipes App</h5>
+        <p class="mb-0">
+          Simple Rails application using Bootstrap 5.
+        </p>
+      </div>
+
+      <div class="col-md-3">
+        <h5>Links</h5>
+        <ul class="list-unstyled">
+          <li><%= link_to "Home", root_path, class: "text-light text-decoration-none" %></li>
+          <li><%= link_to "Recipes", recipes_path, class: "text-light text-decoration-none" %></li>
+          <li><%= link_to "New Recipe",'#', class: "text-light text-decoration-none" %></li>
+        </ul>
+      </div>
+
+      <div class="col-md-3">
+        <h5>Contact</h5>
+        <p>Email: support@example.com</p>
+      </div>
+
+    </div>
+
+    <hr class="border-light">
+
+    <div class="text-center">
+      <p class="mb-0">
+        © <%= Time.current.year %> My Recipes App. All Rights Reserved.
+      </p>
+    </div>
+  </div>
+</footer>

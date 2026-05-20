@@ -1,0 +1,68 @@
+/* Custom application styles */
+
+.jumbotron {
+	padding: 0;
+	margin-bottom: 0;
+}
+
+.hero-section {
+	padding-top: 80px;
+	height: 500px;
+	background-image: url('/assets/s-o-c-i-a-l-c-u-t-hwy3W3qFjgM-unsplash.jpg');
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed;
+	display:list-item;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	color: rgb(60, 58, 58);
+	position: relative;
+	overflow: hidden;
+}
+
+
+.hero-section h1 {
+	position: relative;
+	z-index: 2;
+	font-size: 3.5rem;
+	font-weight: 700;
+	margin-bottom: 1rem;
+	text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+	letter-spacing: 1px;
+	animation: slideInDown 0.8s ease-out;
+}
+
+.hero-section h2 {
+	position: relative;
+	z-index: 2;
+	font-size: 1.5rem;
+	font-weight: 300;
+	margin-bottom: 2rem;
+	text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+	animation: slideInUp 0.8s ease-out 0.2s both;
+}
+
+.hero-section .btn {
+	position: relative;
+	z-index: 2;
+	padding: 12px 40px;
+	font-size: 1.1rem;
+	font-weight: 600;
+	border-radius: 50px;
+	border: 2px solid white;
+	transition: all 0.3s ease;
+	animation: slideInUp 0.8s ease-out 0.4s both;
+}
+
+.hero-section .btn-light {
+	background-color: black;
+	color: #333;
+}
+
+.hero-section .btn-light:hover {
+	background-color: #f8f9fa;
+	border-color: #f8f9fa;
+	box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+	transform: translateY(-3px);
+}
