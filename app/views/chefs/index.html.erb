@@ -15,7 +15,9 @@
                 <td><%= chef.recipes.count %> recipes</td>
                 <td>
                     <%= link_to "View", chef_path(chef), class: "btn btn-sm btn-primary" %>
-                    <%= button_to "Delete Chef", chef_path(chef), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm btn-danger", form: { class: "d-inline" } %>
+                    <% if authorized_for_admin? %>
+                        <%= button_to "Delete Chef", chef_path(chef), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm btn-danger", form: { class: "d-inline" } %>
+                    <% end %>
                 </td>
             </tr>
         <% end %>

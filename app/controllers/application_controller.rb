@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   # Changes to the importmap will invalidate the etag for HTML responses
   stale_when_importmap_changes
 
-helper_method :current_chef, :logged_in? , :authorized_for_recipecrud? , :authorized_for_chefcrud?
+helper_method :current_chef, :logged_in? , :authorized_for_recipecrud? , :authorized_for_chefcrud? , :authorized_for_admin?
 
   def current_chef
     @current_chef ||= Chef.find_by(id: session[:chef_id]) if session[:chef_id]
@@ -22,13 +22,17 @@ helper_method :current_chef, :logged_in? , :authorized_for_recipecrud? , :author
   end
 
   def authorized_for_recipecrud?(recipe)
-    unless recipe.chef_id == current_chef.id
-       end
+    recipe.chef_id == current_chef&.id
   end
 
   def authorized_for_chefcrud?(chef)
     logged_in? && chef.id == current_chef&.id
   end
+
+  def authorized_for_admin?
+    logged_in? && current_chef.admin?
+  end
+
 end
 
 

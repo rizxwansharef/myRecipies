@@ -6,9 +6,12 @@ Rails.application.routes.draw do
   get "/signup", to: "chefs#new"
   get "/login", to: "sessions#new"
   post "/login", to: "sessions#create"
-  delete "/logout", to: "sessions#destroy"
+  match "/logout", to: "sessions#destroy", via: [:get, :delete]
 
-  resources :recipes 
+  resources :ingredients, only: [:index, :show, :new, :create, :destroy]
+  resources :recipes do
+    resources :comments, only: [:create, :destroy]
+  end
   resources :chefs , only: [ :create, :show, :edit, :update , :destroy , :index ] 
 
 end

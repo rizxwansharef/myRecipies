@@ -1,0 +1,26 @@
+<div class="container py-5">
+	<div class="mb-4">
+		<%= link_to "← Back to Ingredients", ingredients_path, class: "btn btn-link" %>
+	</div>
+
+	<div class="card shadow-sm">
+		<div class="card-body">
+			<h1 class="card-title mb-3"><%= @ingredient.name %></h1>
+			<p class="text-muted mb-4">
+				<%= pluralize(@ingredient.recipes.count, "recipe") %> contain this ingredient.
+			</p>
+
+			<% if @ingredient.recipes.any? %>
+				<div class="list-group">
+					<% @ingredient.recipes.each do |recipe| %>
+						<%= link_to recipe.name, recipe_path(recipe), class: "list-group-item list-group-item-action" %>
+					<% end %>
+				</div>
+			<% else %>
+				<div class="alert alert-info mb-0" role="alert">
+					No recipes use this ingredient yet.
+				</div>
+			<% end %>
+		</div>
+	</div>
+</div>

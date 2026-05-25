@@ -4,5 +4,5 @@ class Chef < ApplicationRecord
     validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: true
     has_secure_password
     validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
-
+    has_many :comments, dependent: :destroy
 end

@@ -11,15 +11,83 @@
             </p>
             <p class="card-text"><%= @recipe.description %></p>
 
-        </div>
+                <h5>Ingredients:</h5>
+                <% if @recipe.ingredients.any? %>
+                    <div class="d-flex flex-wrap gap-2 mb-3">
+                        <% @recipe.ingredients.each do |ingredient| %>
+                            <%= link_to ingredient.name, ingredient_path(ingredient), class: "badge bg-primary text-decoration-none" %>
+                        <% end %>
+                    </div>
+                <% else %>
+                    <p class="text-muted">No ingredients added yet.</p>
+                <% end %>
+
+                                <div class="mt-4">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <h5 class="mb-0">Comments</h5>
+                                        <span class="text-muted"><%= pluralize(@recipe.comments.size, "comment") %></span>
+                                    </div>
+
+                                    <div class="border rounded p-3 mb-3" style="max-height: 320px; overflow-y: auto;">
+                                        <% if @recipe.comments.any? %>
+                                            <% @recipe.comments.each do |comment| %>
+                                                <div class="mb-3 p-3 border rounded bg-light">
+                                                    <p class="mb-2"><%= comment.content %></p>
+                                                    <p class="text-muted mb-1">
+                                                        <strong><%= comment.chef&.name || "Unknown" %></strong>
+                                                        <% if comment.chef_id == @recipe.chef_id %>
+                                                          <span class="badge bg-secondary ms-2">Owner</span>
+                                                        <% end %>
+                                                    </p>
+                                                    <p class="text-muted mb-0">
+                                                        Posted on <%= comment.created_at.strftime("%B %d, %Y at %I:%M %p") %>
+                                                    </p>
+                                                    <% if authorized_for_admin? %>
+                                                      <div class="mt-2">
+                                                        <%= button_to "Delete Comment", recipe_comment_path(@recipe, comment), method: :delete, data: { turbo_confirm: "Delete this comment?" }, class: "btn btn-sm btn-outline-danger", form: { class: "d-inline" } %>
+                                                      </div>
+                                                    <% end %>
+                                                </div>
+                                            <% end %>
+                                        <% else %>
+                                            <p class="text-muted mb-0">No comments yet.</p>
+                                        <% end %>
+                                    </div>
+
+                                    <% if logged_in? %>
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h6 class="card-title mb-3">Add a comment</h6>
+                                                <%= form_with model: [@recipe, @comment], local: true do |form| %>
+                                                    <div class="mb-3">
+                                                        <%= form.label :content, class: "form-label" %>
+                                                        <%= form.text_area :content, class: "form-control", rows: 3, required: true %>
+                                                    </div>
+                                                    <%= form.submit "Post Comment", class: "btn btn-primary" %>
+                                                <% end %>
+                                            </div>
+                                        </div>
+                                    <% else %>
+                                        <div class="alert alert-info mb-0">
+                                            <%= link_to "Login", login_path %> to add a comment.
+                                        </div>
+                                    <% end %>
+                                </div>
 
     </div>
     <div class="mt-3">
         <% if authorized_for_recipecrud?(@recipe) %>
 
             <%= link_to "Edit", edit_recipe_path(@recipe), class: "btn btn-secondary me-2" %>
-            <%= button_to "Delete", destroy_recipe_path(@recipe), method: :delete, class: "btn btn-danger", form: { class: "d-inline" } %>
+
         <% end %>
+
+        <% if authorized_for_admin?  || authorized_for_recipecrud?(@recipe) %>
+    
+            <%= button_to "Delete", recipe_path(@recipe), method: :delete, class: "btn btn-danger", form: { class: "d-inline" } %>
+        
+        <% end %>
+
     </div>
 
 </div>

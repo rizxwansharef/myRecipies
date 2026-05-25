@@ -1,13 +1,26 @@
 class RecipesController < ApplicationController
   before_action :require_login , except: %i[index show]
   before_action :set_recipe, only: %i[show edit update destroy]
+  before_action :set_ingredients, only: %i[new edit create update]
 
   def index
-    @recipes = Recipe.all
+    @recipes = Recipe.includes(:chef, :comments)
+
+    if params[:chef_id].present?
+      @recipes = @recipes.where(chef_id: params[:chef_id])
+    else
+      if logged_in?
+        @my_recipes = @recipes.where(chef_id: current_chef.id)
+        @other_recipes = @recipes.where.not(chef_id: current_chef.id)
+      else
+        @my_recipes = Recipe.none
+        @other_recipes = @recipes
+      end
+    end
   end
 
   def show
-    
+    @comment = Comment.new
   end
  
   def new
@@ -43,11 +56,15 @@ class RecipesController < ApplicationController
   private
 
   def set_recipe
-    @recipe = Recipe.find(params[:id])
+    @recipe = Recipe.includes(:chef, :ingredients, comments: :chef).find(params[:id])
   end
 
   def recipe_params
-    params.require(:recipe).permit(:name, :description, :chef_id)
+    params.require(:recipe).permit(:name, :description, :chef_id, ingredient_ids: [])
+  end
+
+  def set_ingredients
+    @ingredients = Ingredient.all.order(:name)
   end
   
   

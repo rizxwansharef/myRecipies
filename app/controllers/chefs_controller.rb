@@ -14,8 +14,7 @@ class ChefsController < ApplicationController
             flash.now[:alert] = "Password confirmation doesn't match password."
             render :new
         elsif @chef.save
-            session[:chef_id] = @chef.id
-            redirect_to chef_path(@chef), notice: "Chef was successfully created."
+            redirect_to login_path
         else
             render :new
         end
@@ -25,7 +24,7 @@ class ChefsController < ApplicationController
     end
 
     def edit
-        
+
     end
 
     def update

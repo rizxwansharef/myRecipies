@@ -1,0 +1,41 @@
+<div class="container py-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h1 class="mb-0">Ingredients</h1>
+        <p class="text-muted">Showing Ingredients </p>
+        
+    
+    </div>
+    <% if authorized_for_admin? %>
+    <%= link_to "New Ingredient", new_ingredient_path, class: "btn btn-primary" %>
+    <% end %>
+  </div>
+
+  <% if @ingredients.any? %>
+    <div class="row g-4">
+      <% @ingredients.each do |ingredient| %>
+        <div class="col-md-6 col-lg-4">
+          <div class="card h-100 shadow-sm">
+            
+              <h2 class="h5 card-title"><%= ingredient.name %></h2>
+              
+
+              <div class="mt-auto">
+                <%= link_to "View Ingredient", ingredient_path(ingredient), class: "btn btn-outline-primary me-2" %>
+
+                    <% if authorized_for_admin? %>
+                    <%= link_to "Delete", ingredient_path(ingredient), method: :delete, confirm: "Are you sure?", class: "btn btn-danger me-2" %>
+                    <% end %>
+
+              </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="alert alert-info" role="alert">
+      No ingredients found yet. Add one to get started.
+    </div>
+  <% end %>
+</div>
+

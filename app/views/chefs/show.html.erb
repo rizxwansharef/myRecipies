@@ -10,8 +10,33 @@
   <%= @chef.email %>
 </div>
 
+<div class="mb-3">
+  <strong>Recipes Posted:</strong>
+  <% if @chef.recipes.any? %>
+    <ul>
+      <% @chef.recipes.each do |recipe| %>
+        <li>
+          <%= link_to recipe.name, recipe_path(recipe) %>
+          <span class="text-muted">(<%= pluralize(recipe.comments.size, "comment") %>)</span>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>No recipes posted yet.</p>
+  <% end %>
+</div>
+
+
 <div class="d-flex gap-2">
-    
+     
+        <% if logged_in? && authorized_for_chefcrud?(@chef) %>
+                <%= link_to "Create Recipe", new_recipe_path, class: "btn btn-primary" %>
+        <% end %>
+
+      <% if authorized_for_chefcrud?(@chef) %>
         <%= link_to "Edit profile", edit_chef_path(@chef), class: "btn btn-primary" %>
-        <%= link_to "View Recipes", recipes_path, class: "btn btn-outline-secondary" %>
+      <% end %>
+      <%if authorized_for_admin? || authorized_for_chefcrud?(@chef) %>
+        <%= button_to "Delete Chef", chef_path(@chef), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger", form: { class: "d-inline" } %>
+      <% end %>
 </div>

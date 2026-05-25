@@ -2,8 +2,8 @@ class CreateRecipeIngredients < ActiveRecord::Migration[8.1]
   def change
     create_table :recipe_ingredients do |t|
       t.timestamps
-      t.integer :recipe_id
-      t.integer :ingredient_id
+      t.references :recipe, null: false, foreign_key: true
+      t.references :ingredient, null: false, foreign_key: true
     end
   end
 end
