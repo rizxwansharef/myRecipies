@@ -22,7 +22,7 @@
     <%= form.text_area :description, class: "form-control", required: true %>
   </div>
 
-  <% if authorized_for_admin? || authorized_for_recipecrud?(@recipe) %>
+  <% authorized_for_recipecrud?(@recipe) %>
   <div class="mb-3">
     <label class="form-label d-block">Ingredients</label>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-2">
@@ -37,13 +37,12 @@
     </div>
   </div>
 
-    <% if authorized_for_admin? && show_new_ingredient_field %>
+    <% if  show_new_ingredient_field %>
       <div class="mb-3">
         <%= form.label :new_ingredient_name, "Add new ingredient", class: "form-label" %>
         <%= form.text_field :new_ingredient_name, class: "form-control", placeholder: "Type a new ingredient name" %>
         <div class="form-text">The ingredient will be created and added to this recipe when you save.</div>
       </div>
-    <% end %>
 
   <% end %>
 

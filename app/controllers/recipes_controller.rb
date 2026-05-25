@@ -34,7 +34,7 @@ class RecipesController < ApplicationController
     if @recipe.save
       ingredient_name = params.dig(:recipe, :new_ingredient_name).to_s.strip
 
-      if authorized_for_admin? && ingredient_name.present?
+      if ingredient_name.present?
         ingredient = Ingredient.find_or_create_by(name: ingredient_name)
         @recipe.ingredients << ingredient unless @recipe.ingredients.exists?(ingredient.id)
       end
