@@ -15,7 +15,7 @@
             Recipes
           </a>
           <ul class="dropdown-menu dropdown-menu-end">
-            <% Recipe.limit(5).each do |recipe| %>
+            <% Recipe.order(id: :desc).limit(5).each do |recipe| %>
               <li><%= link_to recipe.name, recipe_path(recipe), class: "dropdown-item" %></li>
             <% end %>
             <li><hr class="dropdown-divider"></li>
@@ -33,7 +33,7 @@
             Chefs
           </a>
           <ul class="dropdown-menu dropdown-menu-end">
-            <% Chef.limit(5).each do |chef| %>
+            <% Chef.order(id: :desc).limit(5).each do |chef| %>
               <li><%= link_to chef.name, chefs_path(chef), class: "dropdown-item" %></li>
             <% end %>
             <li><hr class="dropdown-divider"></li>
