@@ -28,9 +28,17 @@ class RecipesController < ApplicationController
   end
 
   def create
-    @recipe = Recipe.new(recipe_params)
-    @recipe.chef_id =current_chef.id
+    @recipe = Recipe.new(recipe_params.except(:new_ingredient_name))
+    @recipe.chef_id = current_chef.id
+
     if @recipe.save
+      ingredient_name = params.dig(:recipe, :new_ingredient_name).to_s.strip
+
+      if authorized_for_admin? && ingredient_name.present?
+        ingredient = Ingredient.find_or_create_by(name: ingredient_name)
+        @recipe.ingredients << ingredient unless @recipe.ingredients.exists?(ingredient.id)
+      end
+
       redirect_to @recipe, notice: "Recipe was successfully created."
     else
       render :new, status: :unprocessable_entity
@@ -41,7 +49,7 @@ class RecipesController < ApplicationController
   end
 
   def update
-    if @recipe.update(recipe_params)
+    if @recipe.update(recipe_params.except(:new_ingredient_name))
       redirect_to @recipe, notice: "Recipe was successfully updated."
     else
       render :edit, status: :unprocessable_entity
@@ -60,7 +68,7 @@ class RecipesController < ApplicationController
   end
 
   def recipe_params
-    params.require(:recipe).permit(:name, :description, :chef_id, ingredient_ids: [])
+    params.require(:recipe).permit(:name, :description, :chef_id, :new_ingredient_name, ingredient_ids: [])
   end
 
   def set_ingredients
