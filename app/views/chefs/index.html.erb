@@ -16,7 +16,8 @@
                 <td>
                     <%= link_to "View", chef_path(chef), class: "btn btn-sm btn-primary" %>
                     <% if authorized_for_admin? %>
-                        <%= button_to "Delete Chef", chef_path(chef), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm btn-danger", form: { class: "d-inline" } %>
+                        <%= button_to "Delete (del recipes)", chef_path(chef, delete_recipes: 'delete'), method: :delete, data: { turbo_confirm: "Delete chef and their recipes?" }, class: "btn btn-sm btn-danger", form: { class: "d-inline" } %>
+                        <%= button_to "Delete (keep recipes)", chef_path(chef, delete_recipes: 'keep'), method: :delete, data: { turbo_confirm: "Delete chef but keep recipes?" }, class: "btn btn-sm btn-warning ms-1", form: { class: "d-inline" } %>
                     <% end %>
                 </td>
             </tr>

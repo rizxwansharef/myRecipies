@@ -37,6 +37,8 @@
         <%= link_to "Edit profile", edit_chef_path(@chef), class: "btn btn-primary" %>
       <% end %>
       <%if authorized_for_admin? || authorized_for_chefcrud?(@chef) %>
-        <%= button_to "Delete Chef", chef_path(@chef), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger", form: { class: "d-inline" } %>
+        <%= button_to "Delete chef and DELETE recipes", chef_path(@chef, delete_recipes: 'delete'), method: :delete, data: { turbo_confirm: "Are you sure? This will delete the chef and all their recipes." }, class: "btn btn-danger", form: { class: "d-inline" } %>
+
+        <%= button_to "Delete chef but KEEP recipes", chef_path(@chef, delete_recipes: 'keep'), method: :delete, data: { turbo_confirm: "Are you sure? This will delete the chef but keep their recipes available." }, class: "btn btn-warning ms-2", form: { class: "d-inline" } %>
       <% end %>
 </div>

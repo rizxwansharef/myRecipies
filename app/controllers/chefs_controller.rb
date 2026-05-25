@@ -36,6 +36,9 @@ class ChefsController < ApplicationController
     end
 
     def destroy
+        if params[:delete_recipes] == 'keep'
+            Recipe.where(chef_id: @chef.id).update_all(chef_id: nil)
+        end
         @chef.destroy
         redirect_to chefs_path, notice: "Chef was successfully deleted."
     end
