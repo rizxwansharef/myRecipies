@@ -4,5 +4,10 @@
         <h1>Welcome to My Recipes App</h1>
         <h2>Discover delicious recipes and create your own culinary masterpieces</h2>
         <%= link_to "Explore Recipes", recipes_path, class: "btn btn-light" %>
+        <%= link_to "Sign Up as Chef", '/signup', class: "btn btn-outline-light ms-2" %>
+       
+        <% if logged_in? %>
+            <%= link_to "Create Recipe", new_recipe_path, class: "btn btn-outline-light ms-2" %>
+        <% end %>
     </div>
 </div>
