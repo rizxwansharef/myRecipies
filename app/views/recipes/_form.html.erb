@@ -22,7 +22,6 @@
     <%= form.text_area :description, class: "form-control", required: true %>
   </div>
 
-  <% authorized_for_recipecrud?(@recipe) %>
   <div class="mb-3">
     <label class="form-label d-block">Ingredients</label>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-2">
@@ -37,14 +36,60 @@
     </div>
   </div>
 
-    <% if  show_new_ingredient_field %>
+    <% if show_new_ingredient_field %>
       <div class="mb-3">
-        <%= form.label :new_ingredient_name, "Add new ingredient", class: "form-label" %>
-        <%= form.text_field :new_ingredient_name, class: "form-control", placeholder: "Type a new ingredient name" %>
-        <div class="form-text">The ingredient will be created and added to this recipe when you save.</div>
+        <button id="show-new-ingredient-toggle" type="button" class="btn btn-sm btn-outline-secondary mb-2" aria-expanded="false">Add new ingredient(s)</button>
+
+        <div id="new-ingredient-wrapper" style="display:none;">
+          <div class="mb-2">
+            <div id="new-ingredient-fields">
+              <div class="input-group mb-2">
+                <input type="text" name="recipe[new_ingredient_names][]" class="form-control" placeholder="Type a new ingredient name" />
+              </div>
+            </div>
+            <div class="d-flex gap-2">
+              <button id="add-ingredient-field" type="button" class="btn btn-sm btn-secondary">Add another ingredient</button>
+            </div>
+          </div>
+        </div>
       </div>
 
-  <% end %>
+      <script>
+        (function(){
+          var toggle = document.getElementById('show-new-ingredient-toggle');
+          var wrapper = document.getElementById('new-ingredient-wrapper');
+          var addBtn = document.getElementById('add-ingredient-field');
+          var container = document.getElementById('new-ingredient-fields');
+          if (!toggle) return;
+
+          toggle.addEventListener('click', function(){
+            var isVisible = wrapper.style.display !== 'none';
+            wrapper.style.display = isVisible ? 'none' : '';
+            toggle.setAttribute('aria-expanded', (!isVisible).toString());
+            if (!isVisible) {
+              // focus the first input when opening
+              var first = container.querySelector('input');
+              if (first) first.focus();
+            }
+          });
+
+          if (addBtn && container) {
+            addBtn.addEventListener('click', function(){
+              var newWrap = document.createElement('div');
+              newWrap.className = 'input-group mb-2';
+              var input = document.createElement('input');
+              input.type = 'text';
+              input.name = 'recipe[new_ingredient_names][]';
+              input.className = 'form-control';
+              input.placeholder = 'Type a new ingredient name';
+              newWrap.appendChild(input);
+              container.appendChild(newWrap);
+              input.focus();
+            });
+          }
+        })();
+      </script>
+    <% end %>
 
   <div class="d-flex gap-2">
     <%= form.submit class: "btn btn-primary" %>

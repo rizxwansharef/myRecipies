@@ -1,11 +1,9 @@
 class ApplicationController < ActionController::Base
-  # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
 
-  # Changes to the importmap will invalidate the etag for HTML responses
   stale_when_importmap_changes
 
-helper_method :current_chef, :logged_in? , :authorized_for_recipecrud? , :authorized_for_chefcrud? , :authorized_for_admin?
+helper_method :current_chef, :logged_in?, :authorized_for_recipecrud?, :authorized_for_chefcrud?, :authorized_for_admin?
 
   def current_chef
     @current_chef ||= Chef.find_by(id: session[:chef_id]) if session[:chef_id]
@@ -32,8 +30,4 @@ helper_method :current_chef, :logged_in? , :authorized_for_recipecrud? , :author
   def authorized_for_admin?
     logged_in? && current_chef.admin?
   end
-
 end
-
-
-

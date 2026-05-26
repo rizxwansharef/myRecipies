@@ -1,5 +1,4 @@
-class IngredientsController <ApplicationController 
-
+class IngredientsController <ApplicationController
     def index
         @ingredients = Ingredient.all
     end
@@ -24,7 +23,7 @@ class IngredientsController <ApplicationController
             redirect_to ingredients_path, alert: "You are not authorized to perform this action."
         end
     end
-    
+
     def destroy
         if authorized_for_admin?
             @ingredient = Ingredient.find(params[:id])
@@ -38,5 +37,5 @@ class IngredientsController <ApplicationController
     private
     def ingredient_params
         params.require(:ingredient).permit(:name)
-    end 
+    end
 end

@@ -1,5 +1,5 @@
 class ChefsController < ApplicationController
-    before_action :set_chef,only: %i[show edit update destroy]
+    before_action :set_chef, only: %i[show edit update destroy]
     def index
         @chefs = Chef.all
     end
@@ -24,19 +24,18 @@ class ChefsController < ApplicationController
     end
 
     def edit
-
     end
 
     def update
         if @chef.update(chef_params)
             redirect_to chef_path(@chef), notice: "Chef was successfully updated."
         else
-            render 'edit'
+            render "edit"
         end
     end
 
     def destroy
-        if params[:delete_recipes] == 'keep'
+        if params[:delete_recipes] == "keep"
             Recipe.where(chef_id: @chef.id).update_all(chef_id: nil)
         end
         @chef.destroy
@@ -46,7 +45,7 @@ class ChefsController < ApplicationController
     private
     def chef_params
         params.require(:chef).permit(:name, :email, :password, :password_confirmation)
-    end 
+    end
 
     def set_chef
         @chef = Chef.find(params[:id])

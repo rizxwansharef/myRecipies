@@ -10,4 +10,4 @@ class PagesTest < ActionDispatch::IntegrationTest
     get root_url
     assert_response :success
    end
-endrails 
+end
