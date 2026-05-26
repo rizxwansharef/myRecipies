@@ -3,11 +3,9 @@ Rails.application.routes.draw do
   get "/home", to: "pages#home"
   get "/pages/home", to: "pages#home"
 
-  get "/signup", to: "chefs#new"
-  get "/login", to: "sessions#new"
-  post "/login", to: "sessions#create"
-  match "/logout", to: "sessions#destroy", via: [ :get, :delete ]
-
+  devise_for :chefs, controllers: {
+        sessions: 'chefs/sessions'
+      }
   resources :ingredients, only: [ :index, :show, :new, :create, :destroy ]
   resources :recipes do
     resources :comments, only: [ :create, :destroy ]

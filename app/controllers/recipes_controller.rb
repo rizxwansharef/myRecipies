@@ -1,5 +1,5 @@
 class RecipesController < ApplicationController
-  before_action :require_login, except: %i[index show]
+  before_action :authenticate_chef!, except: %i[index show]
   before_action :set_recipe, only: %i[show edit update destroy]
   before_action :set_ingredients, only: %i[new edit create update]
 
@@ -9,7 +9,7 @@ class RecipesController < ApplicationController
     if params[:chef_id].present?
       @recipes = @recipes.where(chef_id: params[:chef_id])
     else
-      if logged_in?
+      if chef_signed_in?
         @my_recipes = @recipes.where(chef_id: current_chef.id)
         @other_recipes = @recipes.where.not(chef_id: current_chef.id)
       else

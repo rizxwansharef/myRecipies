@@ -29,7 +29,7 @@
 
 <div class="d-flex gap-2">
      
-        <% if logged_in? && authorized_for_chefcrud?(@chef) %>
+        <% if chef_signed_in? && authorized_for_chefcrud?(@chef) %>
                 <%= link_to "Create Recipe", new_recipe_path, class: "btn btn-primary" %>
         <% end %>
 

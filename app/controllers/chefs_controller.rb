@@ -14,7 +14,7 @@ class ChefsController < ApplicationController
             flash.now[:alert] = "Password confirmation doesn't match password."
             render :new
         elsif @chef.save
-            redirect_to login_path
+            redirect_to new_chef_session_path
         else
             render :new
         end

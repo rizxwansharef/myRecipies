@@ -11,7 +11,7 @@
       </p>
       <div class="mt-auto">
         <%= link_to "View Recipe", recipe_path(recipe), class: "btn btn-outline-primary me-2" %>
-        <% if logged_in? && authorized_for_recipecrud?(recipe) %>
+        <% if chef_signed_in? && authorized_for_recipecrud?(recipe) %>
           <%= link_to "Edit", edit_recipe_path(recipe), class: "btn btn-secondary me-2" %>
         <% end %>
 
